@@ -5942,6 +5942,10 @@ async function getContext () {
   return content
 }
 
+function fixGithubHeadings(content) {
+  return content.replace(/#/g, '')
+}
+
 async function run () {
   try {
     const webhookId = core.getInput('webhook_id')
@@ -5953,10 +5957,12 @@ async function run () {
 
     const content = await getContext()
 
+    const embedTitle = process.env.INPUT_PROJECT_NAME == "undefined" ? `Release ${content.version}` : `${process.env.INPUT_PROJECT_NAME} Release ${content.version}`
+
     const embedMsg = {
-      color: 3447003,
-      title: `Release ${content.version}`,
-      description: content.body,
+      color: process.env.INPUT_EMBED_COLOUR,
+      title: embedTitle,
+      description: fixGithubHeadings(content.body),
       url: content.html_url
     }
 
