@@ -7,6 +7,13 @@ inputs:
   webhook_token:
     description: Discord's webhook token. Use GH repo secrets.
     required: true
+  embed_colour:
+    description: An optional colour for the embed that gets posted in Discord.
+    default: 1315909
+    required: false
+  project_name:
+    description: An optional project name to appear before "Release" in the embed that gets posted in Discord.
+    required: false
 runs:
   using: 'node12'
   main: './dist/index.js'
